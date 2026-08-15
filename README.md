@@ -15,7 +15,7 @@ prime factors, together with the relaxation obtained by allowing real
 exponents. The main theorem evaluates the integrality gap between the two
 optima,
 
-$$g_{\mathbf{R}}(m) - g_{\mathbf{Z}}(m) = \frac{2\sqrt{2} + o(1)}{\sqrt{p_m}\,\log p_m},$$
+$$g_{\mathbf{R}}(m) - g_{\mathbf{Z}}(m) = \frac{2\sqrt{2} + o(1)}{\sqrt{p_m}\\,\log p_m},$$
 
 unconditionally, where $p_m$ is the $m$th prime. Combining the gap with
 Nicolas's integrated explicit formula shows that the Riemann hypothesis is
