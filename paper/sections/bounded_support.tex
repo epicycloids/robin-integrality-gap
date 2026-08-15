@@ -1,0 +1,210 @@
+\section{At most \texorpdfstring{\(m\)}{m} prime factors}
+\label{s-bounded-support}
+
+When \(\omega(n)\leq m\), the support is chosen together with the
+exponents. Define
+\[
+    g_{\integers}^{\leq}(m)
+    =
+    \sup_{\substack{n\geq5041\\ \omega(n)\leq m}}
+    \log G(n).
+\]
+The CA marginal ordering restricted to the first \(m\) primes solves this
+problem, apart from a finite boundary created by \(n\geq5041\).
+
+For \(p\in\{p_1,\ldots,p_m\}\), order all increments \(F(p,k)\),
+\(k\geq1\), by decreasing score, processing equal scores as one block.
+Starting from \(1\), let \(n_j\) be the integer obtained after the first
+\(j\) blocks. Every prefix is a valid exponent vector with at
+most \(m\) positive exponents. Direct score comparison gives the first
+score-ordered prefixes
+\[
+    2,\ 6,\ 12,\ 60,\ 120,\ 360,\ 2520,\ 5040,\ 55440,
+\]
+which agree with Nicolas's CA tables through \(2520\) and at \(5040\) and
+\(55440\) \cite[Tables~1--2]{nicolas-2022-sigma}. Thus \(55440\) is the
+first score-ordered prefix above Robin's lower cutoff.
+
+\begin{theorem}[Bounded-support characterization]
+\label{thm-bounded-support-prefix}
+For every \(m\geq6\),
+\begin{equation}
+\label{e-bounded-support-prefix}
+    g_{\integers}^{\leq}(m)
+    =
+    \max\left\{
+        \max_{\substack{5041\leq n<55440\\ \omega(n)\leq m}}
+        \log G(n),
+        \ 
+        \max_{\substack{j\geq1\\ n_j\geq55440}}
+        \log G(n_j)
+    \right\}.
+\end{equation}
+Both maxima are attained. Every maximizing integer at least \(55440\)
+is a score-ordered prefix.
+\end{theorem}
+
+\begin{proof}
+We first reduce an arbitrary support to an initial prime segment. Suppose
+\[
+    n=\prod_{i=1}^{k}q_i^{a_i},
+    \qquad
+    q_1<\cdots<q_k,
+    \qquad
+    k\leq m.
+\]
+Replacing \(q_i\) by \(p_i\) decreases \(n\) and strictly increases
+\(\sigma(n)/n\), unless the support was already initial. If the resulting
+integer is below \(5041\), multiply it by the smallest power of \(2\)
+that reaches \(5041\). The result is below \(10082\), preserves the
+support size, and further increases the divisor ratio. For
+\(n\geq55440\), this produces a better feasible integer, either in the
+finite range in \eqref{e-bounded-support-prefix} or on an initial
+support.
+
+An integer on an initial support is a finite selection from the ordered
+increment list. Put \(z=\log n\), and choose consecutive prefix integers
+with
+\[
+    \log n_j\leq z\leq\log n_{j+1}.
+\]
+The fractional-knapsack inequality bounds
+\(\log(\sigma(n)/n)\) by the chord joining the corresponding prefix
+values. This chord is affine in \(z\), while \(-\log\log z\) is strictly
+convex. One of its endpoints therefore has objective at least
+\(\log G(n)\). If \(z=\log55440\), then \(n=55440\), which is already a
+prefix. If \(z>\log55440\), both adjacent endpoints are feasible. Equality
+for a maximizing integer then requires equality in the knapsack bound. If
+the selection cuts a tie block, its point lies in the interior of the
+affine block segment, where strict convexity makes one endpoint strictly
+better.
+At an endpoint, equality in the knapsack bound forces every earlier block
+to be selected and every later block to be unselected. The total log-size
+then forces the intervening block to be either complete or absent. Thus
+every maximizing integer in this range is a score-ordered prefix.
+
+The first maximum in \eqref{e-bounded-support-prefix} is finite. Along
+the prefixes, the total possible increase in the log divisor ratio is
+bounded by
+\[
+    -\sum_{i=1}^{m}\log\left(1-\frac1{p_i}\right),
+\]
+whereas \(\log\log\log n_j\) tends to infinity. Hence
+\(\log G(n_j)\) tends to minus infinity, and the second maximum is also
+attained.
+\end{proof}
+
+\begin{corollary}[Unsaturated support]
+\label{cor-bounded-support-ca}
+Let \(n>55440\) maximize \(g_{\integers}^{\leq}(m)\), and suppose
+\(k=\omega(n)<m\). Then \(n\) is the unique colossally abundant number
+with parameter
+\[
+    \eps=\frac1{\log n\log\log n}.
+\]
+It is also superabundant at its own size, and
+\[
+    p_k<\log n<p_{k+1}+1,
+    \qquad
+    k\in\{\pi(\log n)-1,\pi(\log n)\}.
+\]
+\end{corollary}
+
+\begin{proof}
+Let the last selected block have score \(c_-\), and let the next block
+have score \(c_+\). On the two adjacent chord intervals, the one-sided
+derivatives of the interpolated objective at \(\log n\) are
+\[
+    c_- -\eps>0,
+    \qquad
+    c_+ -\eps<0.
+\]
+The weak inequalities follow from endpoint maximality, and equality is
+excluded by strict convexity on the adjacent interval. Thus every
+selected score exceeds \(\eps\), while every eligible unselected score is
+smaller.
+
+Because \(k<m\), the first-exponent increment for \(p_{k+1}\) is eligible
+and unselected.
+Monotonicity of \(F\) extends the strict separation to every larger prime
+and to all its exponent increments. Equation~\eqref{e-score-dictionary}
+then shows that \(n\) uniquely maximizes
+\[
+    \frac{\sigma(N)}{N^{1+\eps}}
+\]
+over all positive integers, which is the CA characterization. The same
+inequality shows that \(\sigma(N)/N\leq\sigma(n)/n\) whenever \(N\leq n\),
+so \(n\) is SA.
+
+The selected first-exponent increment at \(p_k\) and the unselected one
+at \(p_{k+1}\) give
+\[
+    F(p_k,1)>\frac1{\log n\log\log n}>F(p_{k+1},1).
+\]
+Using
+\[
+    \frac1{p+1}
+    <
+    \log\left(1+\frac1p\right)
+    <
+    \frac1p
+\]
+and the monotonicity of \(x\log x\) gives the endpoint bounds. The
+statement about \(k\) follows.
+\end{proof}
+
+The two maxima in \eqref{e-bounded-support-prefix} exchange roles as
+\(m\) grows.
+
+\begin{proposition}[Eventual prefix dominance]
+\label{prop-eventual-prefix}
+For every \(m\geq6\), the first maximum in
+\eqref{e-bounded-support-prefix} equals
+\(\log G(10080)=-0.0142\ldots\). For \(6\leq m\leq29\), it is the
+larger one, \(g_{\integers}^{\leq}(m)=\log G(10080)\), and the unique
+maximizer is \(10080=2^{5}3^{2}5\cdot7\). For \(m\geq30\), every
+maximizer of \(g_{\integers}^{\leq}(m)\) is a score-ordered prefix
+above \(55440\).
+\end{proposition}
+
+\begin{proof}
+Every integer below \(55440\) has at most six distinct prime factors,
+so the first maximum does not depend on \(m\geq6\). A verification over
+the window \([5041,55440)\) places it at \(10080\), with the runner-up
+\(27720\) lower by \(0.0075\ldots\).
+
+A score-ordered prefix \(n_j\geq55440\) with \(k\) positive exponents
+lies in the slice \(\omega(n)=k\), so its objective is at most
+\(g_{\integers}(k)\), with equality only at a slice maximizer. For
+\(k\leq5\), Proposition~\ref{prop-small-slices} gives
+\(g_{\integers}(k)\leq g_{\integers}(4)=\log G(10080)\), with equality
+only at \(k=4\), whose maximizer \(10080\) lies below \(55440\), so the
+prefix objective is strictly smaller. For \(6\leq k\leq29\), a
+verification by the prefix computation of
+Theorem~\ref{thm-integer-prefix} gives
+\(g_{\integers}(k)<\log G(10080)\). The tightest case is
+\(g_{\integers}(29)=-0.0144\ldots\), short by \(0.00012\ldots\). Hence
+the second maximum stays strictly below the first for
+\(6\leq m\leq29\), which proves the middle claim.
+
+The same computation gives
+\(g_{\integers}(30)=-0.0135\ldots>\log G(10080)\). For \(m\geq30\) the
+slice \(\omega(n)=30\) is feasible, so
+\(g_{\integers}^{\leq}(m)>\log G(10080)\), no integer in the window
+attains the maximum, and Theorem~\ref{thm-bounded-support-prefix}
+identifies every maximizer as a score-ordered prefix.
+\end{proof}
+
+The prefixes must eventually dominate. The slice maxima
+\(g_{\integers}(m)\) tend to zero, since the relaxed excess is a
+Mertens error by \eqref{e-relaxed-value} and the gap vanishes by
+Theorem~\ref{thm-integrality-gap}, while \(\log G(10080)\) is a fixed
+negative number. The computation locates the change at \(m=30\).
+
+For a maximizing prefix above \(55440\), the threshold has two
+interpretations. If the cap is active, the Lagrangian and size-constrained
+statements hold over integers whose prime divisors are at most \(p_m\). If
+the cap is inactive, strict separation extends to all primes, so the
+optimizer is an unrestricted CA number and hence SA. Thus passing from
+\(\omega(n)=m\) to \(\omega(n)\leq m\) restores the first-exponent scores
+\(F(p,1)\) as decisions.

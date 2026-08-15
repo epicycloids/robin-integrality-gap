@@ -1,0 +1,85 @@
+\section{Consequences for Robin's inequality}
+\label{s-robin-margin}
+
+The two preceding results, together with
+\(-g_{\integers}(m)=\Igap(m)-g_{\reals}(m)\), give the integer margin.
+
+\begin{theorem}[Fixed-slice Robin margin]
+\label{thm-rh-margin}
+Under the Riemann hypothesis,
+\begin{equation}
+\label{e-rh-margin}
+    -\sqrt{p_m}\log p_m\,g_{\integers}(m)
+    =
+    2\sqrt2-2+\mathcal H(\log p_m)+o(1).
+\end{equation}
+Consequently,
+\[
+    g_{\reals}(m)>0>g_{\integers}(m)
+\]
+for every sufficiently large \(m\).
+
+If the Riemann hypothesis is false, then
+\[
+\begin{aligned}
+    \limsup_{m\to\infty}
+    -\sqrt{p_m}\log p_m\,g_{\integers}(m)
+    &=+\infty,\\
+    \liminf_{m\to\infty}
+    -\sqrt{p_m}\log p_m\,g_{\integers}(m)
+    &=-\infty.
+\end{aligned}
+\]
+\end{theorem}
+
+\begin{proof}
+Under the Riemann hypothesis, subtract
+Theorem~\ref{thm-rh-relaxed} from the gap formula in
+Theorem~\ref{thm-integrality-gap}. This gives \eqref{e-rh-margin}.
+The relaxed value is eventually positive by
+Theorem~\ref{thm-rh-relaxed}. The integer value is eventually negative
+because
+\[
+    2\sqrt2-2+\mathcal H(\log p_m)
+    \geq
+    2\sqrt2-2-\tau
+    >
+    0.
+\]
+
+If the hypothesis is false, Theorem~\ref{thm-off-rh-relaxed} gives
+opposite-sign excursions of size \(p_m^{-b}\) for every admissible
+\(b<1/2\). The integrality gap is
+\[
+    O\left(\frac1{\sqrt{p_m}\log p_m}\right)
+    =
+    o(p_m^{-b}).
+\]
+It cannot suppress either excursion. Since
+\(-g_{\integers}=\Igap-g_{\reals}\), the margin has the claimed
+opposite-sign divergence.
+\end{proof}
+
+\begin{corollary}[Eventual fixed-\texorpdfstring{\(\omega\)}{omega}
+criterion]
+\label{cor-fixed-omega-equivalence}
+The Riemann hypothesis is equivalent to the existence of an \(M\) such
+that Robin's inequality holds for every \(n\geq5041\) with
+\(\omega(n)=m\), for every \(m\geq M\).
+\end{corollary}
+
+\begin{proof}
+If the Riemann hypothesis holds, the theorem gives
+\(g_{\integers}(m)<0\) for all sufficiently large \(m\), so every
+integer in each such slice satisfies Robin's inequality.
+
+If it fails, the theorem gives infinitely many \(m\) with
+\(g_{\integers}(m)>0\). Proposition~\ref{prop-support} shows that the
+maximum is attained, so each such slice contains a violation.
+\end{proof}
+
+Formula \eqref{e-rh-margin} separates the sign quantitatively. The
+analytic term contributes \(2-\mathcal H\), while the rounding
+correction contributes \(2\sqrt2\). The strict inequality
+\(2\sqrt2>2+\tau\) is why Robin's inequality survives on the integer
+slice but fails for its real-exponent relaxation.

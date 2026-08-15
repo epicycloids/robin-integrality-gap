@@ -1,0 +1,14 @@
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+missfont.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+.venv/
+__pycache__/
+*.py[cod]

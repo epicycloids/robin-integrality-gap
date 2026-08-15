@@ -1,0 +1,182 @@
+\section{The fixed-\texorpdfstring{\(\omega\)}{omega} extremal problem}
+\label{s-fixed-slice}
+
+We normalize Robin's inequality by
+\[
+    G(n)
+    =
+    \frac{\sigma(n)}
+    {e^\gamma n\log\log n}.
+\]
+Thus Robin's inequality is \(G(n)<1\) for \(n\geq5041\)
+\cite{robin1984}. For \(m\geq1\), define the fixed-\(\omega\) extremal
+value
+\[
+    g_{\integers}(m)
+    =
+    \sup_{\substack{n\geq5041\\ \omega(n)=m}}\log G(n).
+\]
+A negative value of \(g_{\integers}(m)\) means that Robin's inequality
+holds throughout the slice. For \(m\geq6\), the attainment proved below
+makes the converse true as well.
+
+We write \(p_i\) for the \(i\)th prime, and use
+\[
+    \pi(x)=\#\{p\leq x\},
+    \qquad
+    \theta(x)=\sum_{p\leq x}\log p.
+\]
+We use \(\integers_{++}=\{1,2,\ldots\}\).
+The first reduction removes the choice of prime support.
+
+\begin{proposition}[Support reduction]
+\label{prop-support}
+For every \(m\geq6\), the supremum defining
+\(g_{\integers}(m)\) is a maximum. Every maximizer has the form
+\[
+    n=\prod_{i=1}^{m}p_i^{r_i},
+    \qquad
+    r\in\integers_{++}^{m}.
+\]
+\end{proposition}
+
+\begin{proof}
+Suppose
+\[
+    n=\prod_{i=1}^{m}q_i^{r_i},
+    \qquad
+    q_1<\cdots<q_m,
+    \qquad
+    r_i\geq1.
+\]
+For a fixed exponent \(a\), the local factor
+\[
+    1+q^{-1}+\cdots+q^{-a}
+\]
+is strictly decreasing in \(q\). We replace \(q_i\) by \(p_i\) for every
+\(i\). This cannot decrease \(\sigma(n)/n\) or increase \(n\). Since
+\(\log\log n\) is increasing on the range in question, the replacement
+cannot decrease \(G(n)\).
+
+For \(m\geq6\), the replacement remains feasible because
+\[
+    \prod_{i=1}^{m}p_i
+    \geq
+    \prod_{i=1}^{6}p_i
+    =
+    30030
+    >
+    5041.
+\]
+If some \(q_i>p_i\), the corresponding local factor increases strictly,
+while the denominator does not increase. Hence \(G(n)\) increases
+strictly, and every maximizer uses \(p_1,\ldots,p_m\).
+
+We now prove attainment. On this fixed support,
+\(\sigma(n)/n\) is bounded above by
+\[
+    \prod_{i=1}^{m}\frac{p_i}{p_i-1},
+\]
+whereas \(\log\log n\to\infty\) when any exponent tends to infinity.
+Hence \(\log G(n)\to-\infty\) whenever an exponent tends to infinity.
+Only finitely many exponent vectors can
+lie above the value at \(r_i=1\), so the supremum is attained.
+\end{proof}
+
+For \(m\leq5\) the product of the first \(m\) primes is smaller than
+\(5041\), so the replacement in the proof can leave the range
+\(n\geq5041\), and the support need not reduce to the first \(m\)
+primes. A finite verification settles these slices.
+
+\begin{proposition}[Small slices]
+\label{prop-small-slices}
+For \(1\leq m\leq5\), the supremum defining \(g_{\integers}(m)\) is a
+maximum, attained uniquely at
+\[
+    2^{13},\qquad
+    2^{6}3^{4},\qquad
+    2^{5}3^{2}5^{2},\qquad
+    2^{5}3^{2}5\cdot7,\qquad
+    2^{4}3^{2}5\cdot7\cdot11,
+\]
+respectively. Each maximum is negative, and
+\(g_{\integers}(4)=\log G(10080)=-0.0142\ldots\) exceeds the other
+four.
+\end{proposition}
+
+\begin{proof}
+The local factor of \(\sigma(n)/n\) at a prime \(p\) is smaller than
+\(p/(p-1)\), and \(p/(p-1)\) decreases in \(p\), so \(\omega(n)=m\) gives
+\(\sigma(n)/n<\prod_{i=1}^{m}p_i/(p_i-1)\). Hence
+\[
+    \log G(n)
+    <
+    \sum_{i=1}^{m}\log\frac{p_i}{p_i-1}
+    -\gamma-\log\log\log n.
+\]
+The bound decreases in \(n\), and at \(n=10^7\) it is already below the
+maximum claimed for the corresponding \(m\). A verification over the
+integers in \([5041,10^7]\) with \(\omega(n)=m\) completes the proof.
+\end{proof}
+
+Robin's inequality therefore holds on every slice with \(m\leq5\). The
+values are not monotone in \(m\), since
+\(g_{\integers}(5)=\log G(55440)=-0.0168\ldots\) falls below the
+\(m=4\) value. Section~\ref{s-bounded-support} shows that \(10080\)
+holds the bounded-support maximum for \(6\leq m\leq29\).
+
+\paragraph{Real-exponent relaxation.}
+For the rest of the paper, \(m\geq6\) and the support is
+\((p_1,\ldots,p_m)\). For \(r\in[1,\infty)^m\), we write
+\[
+    S(r)=\sum_{i=1}^{m}r_i\log p_i.
+\]
+For \(r\in\integers_{++}^{m}\), we have
+\[
+    \frac{\sigma(\prod_i p_i^{r_i})}
+    {\prod_i p_i^{r_i}}
+    =
+    \prod_{i=1}^{m}
+    \frac{p_i-p_i^{-r_i}}{p_i-1},
+\]
+so the real-exponent relaxation is obtained by using the expression on
+the right for every \(r\in[1,\infty)^m\). Its value is
+\begin{equation}
+\label{e-objective}
+    g_{\reals}(m)
+    =
+    \sup_{r\in[1,\infty)^m}
+    \left(
+        \sum_{i=1}^{m}\log(p_i-p_i^{-r_i})
+        -\gamma
+        -\sum_{i=1}^{m}\log(p_i-1)
+        -\log\log S(r)
+    \right).
+\end{equation}
+This objective agrees with \(\log G(\prod_i p_i^{r_i})\) at every
+positive integer exponent vector.
+Since the integer exponent vectors form a subset of its feasible set,
+\[
+    g_{\reals}(m)\geq g_{\integers}(m).
+\]
+
+The integrality gap is
+\[
+    \Igap(m)=g_{\reals}(m)-g_{\integers}(m).
+\]
+We refer to \(g_{\reals}(m)\) as the relaxed excess and to
+\(-g_{\integers}(m)\) as the fixed-slice Robin margin. A positive relaxed
+excess means that the real-exponent relaxation violates Robin's bound. A
+positive Robin margin means that every integer in the slice satisfies the
+bound.
+
+Thus, for every \(m\geq6\),
+\[
+    -g_{\integers}(m)
+    =
+    \Igap(m)-g_{\reals}(m).
+\]
+We estimate the two terms separately. The gap is unconditional and comes
+from the exponent lattice. The
+relaxed excess is a normalized Mertens error and carries the dependence on
+the zeros of the zeta function.

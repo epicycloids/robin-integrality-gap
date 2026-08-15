@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{hyperref}
+
+\hypersetup{
+    hidelinks,
+    pdftitle={The Integrality Gap in Robin's Inequality with a Fixed Number of Prime Factors},
+    pdfauthor={Logan Bell}
+}
+\setlength{\emergencystretch}{2em}
+\numberwithin{equation}{section}
+
+\newcommand{\reals}{\mathbf{R}}
+\newcommand{\integers}{\mathbf{Z}}
+\newcommand{\eps}{\varepsilon}
+\DeclareMathOperator*{\argmax}{argmax}
+\newcommand{\Igap}{\Delta}
+\newcommand{\rstar}{r^\star}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{The Integrality Gap in Robin's Inequality\\
+with a Fixed Number of Prime Factors}
+\author{Logan Bell \\ \texttt{lmbell@stanford.edu}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Robin's inequality is equivalent to the Riemann hypothesis. We study its
+largest normalized divisor sum among integers with exactly \(m\) distinct
+prime factors, together with the relaxation obtained by allowing real
+exponents. A maximizer uses the first \(m\) primes. One scalar equation
+determines the relaxed optimizer, while sorting exponent increments by
+marginal gain per unit log-size determines every integer optimizer and
+gives a finite computation. We show that each integer exponent is a floor
+or ceiling of its relaxed value and evaluate the sum of the resulting
+rounding losses. If \(g_{\integers}(m)\) and \(g_{\reals}(m)\) are the two
+optimal log values, then
+\[
+    g_{\reals}(m)-g_{\integers}(m)
+    =
+    \frac{2\sqrt2+o(1)}
+    {\sqrt{p_m}\log p_m}.
+\]
+Here \(p_m\) is the \(m\)th prime. The two equal leading contributions
+come from downward and upward rounding near the transition between
+exponents one and two. The same marginal equation appears in the
+Axler--Nicolas comparison of size-constrained maxima and explains its
+matching coefficient. Under the Riemann hypothesis, the relaxation
+eventually violates Robin's inequality while the integer optimum satisfies
+it. If the hypothesis fails, two-sided Mertens excursions dominate the
+gap. Thus the Riemann hypothesis is equivalent to Robin's inequality
+holding on every sufficiently large fixed-\(\omega\) slice.
+\end{abstract}
+
+\input{sections/introduction}
+\input{sections/related_work}
+\input{sections/fixed_slice}
+\input{sections/optimizers}
+\input{sections/integrality_gap}
+\input{sections/relaxed_excess}
+\input{sections/robin_margin}
+\input{sections/bounded_support}
+\input{sections/conclusion}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}

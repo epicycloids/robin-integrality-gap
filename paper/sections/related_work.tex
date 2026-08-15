@@ -1,0 +1,88 @@
+\subsection{Relation to previous work}
+\label{s-related-work}
+
+\paragraph{Superabundant and colossally abundant numbers.}
+Superabundant (SA) numbers are the image of the record map
+\[
+    X\mapsto\argmax_{n\leq X}\frac{\sigma(n)}n,
+\]
+and colossally abundant (CA) numbers are the image of the map
+\[
+    \eps\mapsto\argmax_{n\geq1}\frac{\sigma(n)}{n^{1+\eps}},
+\]
+defined for \(\eps>0\).
+Ramanujan, Alaoglu and Erd\H{o}s, Nicolas, and Robin developed this
+description and the associated benefit methods
+\cite{ramanujan-hcn-1997,alaoglu1944,nicolas-1975-asterisque,
+nicolas-1976-asterisque,robin-1980,robin-1983-rairo}.
+Nicolas's marginal score \(F(p,k)\) governs whether the exponent of \(p\)
+reaches \(k\) \cite[Section~4.1]{nicolas-2022-sigma}.
+
+The score \(F(p,k)\) is also the value-to-log-size ratio in our knapsack
+ordering. Fixing \(\omega(n)=m\) makes the first-exponent increments
+\(F(p,1)\) mandatory for \(p\leq p_m\), while the optional increments
+with \(k\geq2\) retain their classical order. The resulting optimizer is
+CA and SA relative to its prescribed support, but need not be a global
+CA or SA number. The bounded-support problem restores the support
+decisions.
+
+\paragraph{Classical Robin asymptotics.}
+Under the Riemann hypothesis, Ramanujan's expansion for generalized
+superior highly composite numbers, in the corrected version published by
+Nicolas and Robin, already contains the normalized constant
+\(2\sqrt2-2\) and the zeta-zero term that appear in the classical Robin
+margin
+\cite[formula~(382) and Note~71]{ramanujan-hcn-1997}. Nicolas gives a
+modern effective treatment for CA numbers and then for all integers
+\cite[Proposition~5.1 and Theorem~1.1]{nicolas-2022-sigma}. The
+coefficient \(2\sqrt2-2\) and the zero sum in the final integer margin are
+therefore not new here.
+
+These results establish the classical integer margin, not the
+fixed-support relaxation or its integrality gap. Our optimizer
+characterization and rounding formula give that unconditional
+gap. Nicolas's analytic estimates enter only afterward, when the gap is
+combined with the relaxed value.
+
+\paragraph{The Axler--Nicolas comparison.}
+Axler and Nicolas \cite{axler-nicolas-2023} prove
+\[
+    \frac{\displaystyle\max_{n\leq X}n/\varphi(n)}
+         {\displaystyle\max_{n\leq X}\sigma(n)/n}
+    =
+    1+
+    \frac{2\sqrt2}
+         {\sqrt{\log X}\log\log X}
+    +
+    O\left(
+        \frac1{\sqrt{\log X}(\log\log X)^2}
+    \right),
+\]
+where \(\varphi\) is Euler's totient function. Nicolas obtains a full
+expansion \cite[Theorem~1.2]{nicolas-2025}.
+Their size-constrained problem and our fixed-support penalized problem have
+different feasible sets, so neither theorem implies the other. The
+shared second-exponent score equation explains the same leading
+coefficient. The second terms have different meanings in the two
+problems. Section~\ref{s-score-connection} gives the precise comparison.
+
+\paragraph{Other reductions.}
+The first-prime support exchange is standard in work on possible
+counterexamples to Robin's inequality
+\cite[Section~5, Lemma~9]{choie2007}. Other work restricts a least
+counterexample or reduces Robin's criterion to record subsequences
+\cite{akbary-friggstad-2009,nazardonyavi-yakubovich-2014}. We instead
+maximize separately on each level set of \(\omega(n)\). This makes the
+first-exponent increments for the first \(m\) primes mandatory and leaves
+the exponent lattice as the discrete part of the problem.
+
+\paragraph{Outline.}
+Section~\ref{s-fixed-slice} formulates the problem.
+Section~\ref{s-optimizers} gives the scalar relaxed optimizer and the
+score-ordered prefix theorem.
+Section~\ref{s-integrality-gap} proves one-step proximity and evaluates
+the rounding loss. Its final subsection relates the calculation
+to CA shells and the Axler--Nicolas comparison.
+Sections~\ref{s-relaxed-excess} and \ref{s-robin-margin} add Nicolas's
+analytic input and derive the fixed-slice criterion.
+Section~\ref{s-bounded-support} treats \(\omega(n)\leq m\).

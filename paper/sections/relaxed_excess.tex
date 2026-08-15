@@ -1,0 +1,199 @@
+\section{The analytic term}
+\label{s-relaxed-excess}
+
+Define the Chebyshev-normalized Mertens error
+\begin{equation}
+\label{e-mertens-error}
+    E_\theta(x)
+    =
+    -\sum_{p\leq x}\log\left(1-\frac1p\right)
+    -\gamma-\log\log\theta(x).
+\end{equation}
+The relaxed problem differs from this classical term by less than the
+integrality gap.
+
+\paragraph{Relaxed value.}
+We first show that
+\begin{equation}
+\label{e-relaxed-value}
+    g_{\reals}(m)
+    =
+    E_\theta(p_m)
+    +
+    O\left(
+        \frac1{\sqrt{p_m}\log^{3/2}p_m}
+    \right).
+\end{equation}
+Put \(y=\sqrt{1+T^\star}\). The response
+\eqref{e-relaxed-response} gives
+\[
+    p_i-p_i^{-r_i^\star}
+    =
+    \frac{p_iT^\star}{1+T^\star}
+\]
+for \(p_i\leq y\), while \(r_i^\star=1\) for \(p_i>y\).
+Substitution in \eqref{e-objective} gives
+\[
+\begin{aligned}
+    g_{\reals}(m)
+    &=
+    \pi(y)\log\frac{T^\star}{1+T^\star}
+    -\sum_{p\leq p_m}\log\left(1-\frac1p\right)\\
+    &\quad
+    +\sum_{y<p\leq p_m}\log\left(1-\frac1{p^2}\right)
+    -\gamma-\log\log S^\star.
+\end{aligned}
+\]
+The prime number theorem and partial summation give
+\[
+    \pi(y)\left|\log\frac{T^\star}{1+T^\star}\right|
+    +
+    \sum_{p>y}\left|\log\left(1-\frac1{p^2}\right)\right|
+    =
+    O\left(\frac1{\sqrt{T^\star}\log T^\star}\right).
+\]
+Proposition~\ref{prop-relaxed-scale} and
+\eqref{e-relaxed-displacement} also give
+\[
+    \log\log S^\star-\log\log\theta(p_m)
+    =
+    O\left(\frac1{\sqrt{T^\star}\log T^\star}\right).
+\]
+The result follows from \(T^\star\sim p_m\log p_m\).
+
+We now use Nicolas's results to evaluate \(E_\theta(p_m)\).
+
+\subsection{Under the Riemann hypothesis}
+\label{s-rh-branch}
+
+Assume the Riemann hypothesis, and define
+\[
+    \mathcal H(t)
+    =
+    \sum_\rho
+    \frac{e^{(\rho-1/2)t}}{\rho(\rho-1)},
+    \qquad
+    \tau=2+\gamma-\log(4\pi),
+\]
+where the sum runs over the nontrivial zeros of the zeta function, with
+multiplicity. The series is absolutely convergent because its terms are
+\(O(|\operatorname{Im}\rho|^{-2})\).
+
+Nicolas's integrated explicit formula
+\cite[Theorem~3(b), final formula in its proof]
+{nicolas-1983-petites-valeurs}, translated to the normalization
+\eqref{e-mertens-error}, is
+\begin{equation}
+\label{e-nicolas-integrated}
+    E_\theta(x)
+    =
+    \frac{2-\mathcal H(\log x)}
+         {\sqrt x\log x}
+    +
+    O\left(\frac{1}{\sqrt x\log^2x}\right).
+\end{equation}
+The same proof records the classical identity
+\[
+    \sum_\rho\frac{1}{\rho(1-\rho)}
+    =
+    2+\gamma-\log(4\pi).
+\]
+On the critical line, \(\rho(1-\rho)=|\rho|^2\). Therefore
+\begin{equation}
+\label{e-H-bound}
+    |\mathcal H(t)|\leq\tau.
+\end{equation}
+
+\begin{theorem}[Relaxed excess under the Riemann hypothesis]
+\label{thm-rh-relaxed}
+Assume the Riemann hypothesis. Then
+\[
+    \sqrt{p_m}\log p_m\,g_{\reals}(m)
+    =
+    2-\mathcal H(\log p_m)
+    +O\left(\frac1{\sqrt{\log p_m}}\right).
+\]
+In particular,
+\[
+    2-\tau+o(1)
+    \leq
+    \sqrt{p_m}\log p_m\,g_{\reals}(m)
+    \leq
+    2+\tau+o(1),
+\]
+and \(g_{\reals}(m)>0\) for all sufficiently large \(m\).
+\end{theorem}
+
+\begin{proof}
+Apply \eqref{e-nicolas-integrated} at \(x=p_m\), and use
+\eqref{e-relaxed-value}. The error in \eqref{e-relaxed-value}, after
+multiplication by \(\sqrt{p_m}\log p_m\), is
+\(O(1/\sqrt{\log p_m})\). The bounds follow from
+\eqref{e-H-bound}. The lower one is eventually positive because
+\(2-\tau>0\).
+\end{proof}
+
+The bound describes a band containing the normalized relaxed excess. It
+does not assert that the full band is its limit set or that either
+endpoint is attained along the primes.
+
+\subsection{Off the Riemann hypothesis}
+\label{s-off-rh-branch}
+
+We use \(f=\Omega_\pm(g)\) when \(f/g\) has a positive limsup and a
+negative liminf.
+
+\begin{theorem}[Off-RH excursions]
+\label{thm-off-rh-relaxed}
+Suppose the Riemann hypothesis is false, and let
+\[
+    \Theta
+    =
+    \sup\{\operatorname{Re}\rho\mid\zeta(\rho)=0\}.
+\]
+For every \(0<\eps<\Theta-1/2\),
+\[
+    g_{\reals}(m)
+    =
+    \Omega_\pm\left(p_m^{-1/2+\eps}\right).
+\]
+Consequently,
+\[
+\begin{aligned}
+    \limsup_{m\to\infty}
+    \sqrt{p_m}\log p_m\,g_{\reals}(m)
+    &=+\infty,\\
+    \liminf_{m\to\infty}
+    \sqrt{p_m}\log p_m\,g_{\reals}(m)
+    &=-\infty.
+\end{aligned}
+\]
+\end{theorem}
+
+\begin{proof}
+Nicolas
+\cite[Theorem~3(c)]{nicolas-1983-petites-valeurs} proves, in the
+normalization \eqref{e-mertens-error}, that
+\[
+    E_\theta(x)=\Omega_\pm(x^{-b})
+    \qquad
+    (1-\Theta<b<1/2).
+\]
+The function \(E_\theta\) is constant between consecutive primes, and
+the prime number theorem makes the preceding prime asymptotic to \(x\).
+The two real sequences in Nicolas's result therefore give two prime
+subsequences with the same orders and opposite signs.
+
+By \eqref{e-relaxed-value},
+\[
+    g_{\reals}(m)
+    =
+    E_\theta(p_m)
+    +
+    O\left(
+        \frac{1}{\sqrt{p_m}\log^{3/2}p_m}
+    \right).
+\]
+The error is \(o(p_m^{-b})\). Taking \(b=1/2-\eps\) proves the first
+claim, and the normalized divergence follows.
+\end{proof}

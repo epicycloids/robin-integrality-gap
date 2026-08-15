@@ -1,0 +1,78 @@
+\section{Introduction}
+\label{s-introduction}
+
+Let \(\sigma(n)\) be the sum of the positive divisors of \(n\), and let
+\(\gamma\) be Euler's constant. Gr\"onwall \cite{gronwall1913} proved
+\[
+    \limsup_{n\to\infty}
+    \frac{\sigma(n)}{e^\gamma n\log\log n}
+    =
+    1.
+\]
+Robin \cite{robin1984} sharpened this maximal-order statement to a
+pointwise criterion. The Riemann hypothesis holds if and only if
+\[
+    \sigma(n)<e^\gamma n\log\log n
+    \qquad (n\geq5041).
+\]
+We maximize the normalized ratio over integers with a fixed number of
+distinct prime factors. On each such slice the extremal problem becomes
+a finite optimization over the exponents, and we solve it exactly in
+both integer and real variables.
+
+Write \(\omega(n)\) for the number of distinct prime factors of \(n\).
+For each \(m\), let \(g_{\integers}(m)\) be the largest log-normalized
+divisor sum among integers \(n\geq5041\) with \(\omega(n)=m\). A support
+exchange shows that, for \(m\geq6\), every maximizer uses the first \(m\)
+primes. Allowing their exponents to be real numbers at least one gives a
+relaxation with value \(g_{\reals}(m)\). We study
+\[
+    \Igap(m)=g_{\reals}(m)-g_{\integers}(m).
+\]
+
+\paragraph{Main result.}
+If \(p_m\) is the \(m\)th prime, then
+\begin{equation}
+\label{e-integrality-gap-intro}
+    \Igap(m)
+    =
+    \frac{2\sqrt2+o(1)}
+         {\sqrt{p_m}\log p_m}.
+\end{equation}
+The result is unconditional. The real optimizer is determined by one
+scalar equation. Every integer optimizer is a prefix of the exponent
+increments ordered by Nicolas's score \(F(p,k)\), with equal scores
+taken as one block. This gives a finite
+computation with exact score comparisons. Each integer exponent is one of
+the two integers adjacent to its relaxed counterpart. The resulting local
+rounding sum transfers to a prime integral, where only the second-exponent
+range contributes at first order. The two sides of its rounding switch
+each contribute \(\sqrt2/(\sqrt{p_m}\log p_m)\).
+
+\paragraph{Robin's inequality.}
+The identity
+\(-g_{\integers}(m)=\Igap(m)-g_{\reals}(m)\) separates the rounding loss
+from the analytic Mertens term. Under the Riemann hypothesis, Nicolas's
+integrated explicit formula makes the relaxed value eventually positive
+and bounds its normalized coefficient above by
+\(4+\gamma-\log(4\pi)\). This is smaller than the gap coefficient
+\(2\sqrt2\), so the integer optimum is eventually below Robin's bound. If
+the Riemann hypothesis fails, Nicolas's two-sided Mertens excursions
+dominate \eqref{e-integrality-gap-intro}. It follows that the hypothesis
+is equivalent to Robin's inequality holding on every sufficiently large
+fixed-\(\omega\) slice.
+
+\paragraph{Scope.}
+We solve the fixed-support relaxation by one scalar equation, characterize
+every integer optimizer as a score-ordered prefix, prove one-step
+proximity, and evaluate the resulting rounding loss. Combining this
+unconditional calculation with Nicolas's integrated explicit formula
+gives the fixed-slice criterion. Nicolas's CA score and shell estimates
+also place the calculation in the classical theory. In the problem with
+\(\omega(n)\leq m\), first-exponent increments become optional and the
+same score ordering characterizes the optimizers. A finite verification
+settles the slices with \(m\leq5\), where the cutoff \(n\geq5041\)
+blocks the support exchange. The integer
+\(10080=2^{5}3^{2}5\cdot7\) holds the bounded-support maximum for
+\(6\leq m\leq29\), and for \(m\geq30\) the maximizers are score-ordered
+prefixes.

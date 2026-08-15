@@ -1,0 +1,566 @@
+\section{Score rounding and the integrality gap}
+\label{s-integrality-gap}
+
+Fix an integer maximizer
+\[
+    N_m^\star=\prod_{i=1}^{m}p_i^{a_i},
+\]
+and put \(Y=\log(1+T^\star)\). We first show that its exponents are
+obtained by rounding the relaxed exponents one coordinate at a time.
+
+\begin{proposition}[One-step proximity]
+\label{prop-floor-ceiling}
+For every sufficiently large \(m\),
+\[
+    a_i
+    \in
+    \left\{
+        \left\lfloor\frac{Y}{\log p_i}-1\right\rfloor,\,
+        \left\lceil\frac{Y}{\log p_i}-1\right\rceil
+    \right\}
+\]
+when \(p_i<e^{Y/2}\). For \(p_i\geq e^{Y/2}\), we have \(a_i=1\).
+\end{proposition}
+
+\begin{proof}
+Fix a prime below \(e^{Y/2}\), and put
+\[
+    \ell=\left\lfloor\frac{Y}{\log p}-1\right\rfloor.
+\]
+The relaxed first-order equation is
+\[
+    \frac1{p^{Y/\log p}-1}=\frac1{T^\star}.
+\]
+If \(\ell\geq2\), the increment to exponent \(\ell\) lies below the
+relaxed coordinate. Its score is greater than \(1/T^\star\), and hence greater than
+\(\eps_m\) by Proposition~\ref{prop-integer-threshold-scale}. It is
+selected. When \(\ell=1\), the support constraint already gives
+\(a_i\geq\ell\).
+
+We next rule out the increment to exponent \(\ell+2\). Write
+\[
+    u=\frac{Y}{\log p}-1+v
+\]
+on the corresponding unit interval. Since \(p^{Y/\log p}=1+T^\star\),
+\[
+    \frac{T^\star}{p^{u+1}-1}
+    \leq p^{-v}.
+\]
+The interval begins at some \(v\in(0,1]\), so
+\[
+    T^\star F(p,\ell+2)
+    \leq
+    \int_0^1p^{-v}\,dv
+    =
+    \frac{1-p^{-1}}{\log p}
+    \leq
+    \frac1{2\log2}
+    <1.
+\]
+Since \(T^\star\eps_m\) tends to one, this increment and all later ones
+are unselected. Thus \(\ell\leq a_i\leq\ell+1\).
+
+If \(Y/\log p-1\) is an integer, the same estimate applied to the next
+increment shows that it is unselected. This proves the stated
+floor--ceiling alternative. If \(p_i\geq e^{Y/2}\), apply the same
+estimate to \(F(p_i,2)\). The corresponding unit interval begins at a
+nonnegative value of \(v\), so this increment is unselected and
+\(a_i=1\).
+\end{proof}
+
+\begin{theorem}[Integrality-gap asymptotic]
+\label{thm-integrality-gap}
+The integrality gap satisfies
+\[
+    \Igap(m)
+    =
+    \frac{2\sqrt2+o(1)}
+         {\sqrt{p_m}\log p_m}.
+\]
+\end{theorem}
+
+To compare the optimizers coordinatewise, define a score-rounded integer
+exponent at every log-prime \(x\). For
+\(Y>2\log2\) and \(\log2\leq x\leq Y/2\), put
+\begin{equation}
+\label{e-rounded-exponent}
+    a_Y(x)
+    =
+    \begin{cases}
+    \lfloor Y/x\rfloor,
+        &F(e^x,\lfloor Y/x\rfloor)>(e^Y-1)^{-1},\\
+    \lfloor Y/x\rfloor-1,
+        &F(e^x,\lfloor Y/x\rfloor)\leq(e^Y-1)^{-1}.
+    \end{cases}
+\end{equation}
+This is one of the two integers adjacent to \(Y/x-1\). It rounds upward
+exactly when the intervening chord score exceeds the relaxed multiplier.
+Define its local loss by
+\begin{equation}
+\label{e-kappa}
+    \kappa(x,Y)
+    =
+    \log\frac{1-e^{-Y}}
+              {1-e^{-x(a_Y(x)+1)}}
+    +
+    \frac{x(a_Y(x)+1)-Y}{e^Y-1},
+\end{equation}
+and define
+\begin{equation}
+\label{e-rounding-integral}
+    J(Y)
+    =
+    \int_{\log2}^{Y/2}
+    \kappa(x,Y)\frac{e^x}{x}\,dx.
+\end{equation}
+Thus \(\kappa\) is the loss in the local divisor factor after the
+first-order log-size change has been removed.
+
+\begin{proof}[Proof of Theorem~\ref{thm-integrality-gap}]
+\medskip\noindent\emph{Rounding reduction.}
+For \(p_i<e^{Y/2}\), let \(b_i=a_Y(\log p_i)\). Subtracting the
+two objective values and linearizing the size penalty at \(S^\star\)
+gives
+\[
+\begin{aligned}
+    \Igap(m)
+    &=
+    \sum_{p_i<e^{Y/2}}
+    \left[
+        \log\frac{p_i-p_i^{-r_i^\star}}
+                  {p_i-p_i^{-a_i}}
+        -\frac{(r_i^\star-a_i)\log p_i}{T^\star}
+    \right]\\
+    &\quad
+    +O\left(
+        \frac{\log T^\star}{(T^\star)^2}
+        (L_m-S^\star)^2
+    \right).
+\end{aligned}
+\]
+Proposition~\ref{prop-floor-ceiling} gives
+\[
+    |L_m-S^\star|
+    \leq
+    \theta(e^{Y/2})
+    =
+    O(\sqrt{T^\star}),
+\]
+so the displayed error is lower order on the required scale.
+
+Both \(a_i\) and \(b_i\) are adjacent to \(r_i^\star\). If they differ,
+the intervening score lies between \(\eps_m\) and \(1/T^\star\). Hence
+replacing \(a_i\) by \(b_i\) in the sum changes it by at most
+\[
+    \theta(e^{Y/2})
+    \left(\frac1{T^\star}-\eps_m\right)
+    =
+    O\left(\frac{\sqrt{\log T^\star}}{T^\star}\right),
+\]
+where we used \eqref{e-threshold-separation}. This is also lower order.
+The bracket with \(b_i\) is exactly
+\(\kappa(\log p_i,Y)\), by \eqref{e-kappa}.
+We have proved
+\[
+    \sum_{p<e^{Y/2}}\kappa(\log p,Y)
+    =
+    \Igap(m)
+    +
+    o\left(\frac1{\sqrt{T^\star\log T^\star}}\right).
+\]
+
+\medskip\noindent\emph{Prime-sum approximation.}
+Put \(q=e^{-Y}\) and \(\lambda=(e^Y-1)^{-1}\). On an interval where
+\(k=\lfloor Y/x\rfloor\) is constant, put \(s=Y-kx\). Formula
+\eqref{e-kappa} becomes
+\begin{equation}
+\label{e-kappa-branches}
+    \kappa(x,Y)
+    =
+    \begin{cases}
+    \log(1-q)-\log(1-qe^s)-s\lambda,
+        &F(e^x,k)\leq\lambda,\\[1.5mm]
+    \log(1-q)-\log(1-qe^{s-x})+(x-s)\lambda,
+        &F(e^x,k)>\lambda.
+    \end{cases}
+\end{equation}
+The difference between the branches is
+\[
+    x\bigl(\lambda-F(e^x,k)\bigr),
+\]
+so they agree at a switch.
+
+On the first branch,
+\[
+\begin{aligned}
+    xF(e^x,k)
+    &=
+    \log(1-qe^{s-x})-\log(1-qe^s)\\
+    &\geq
+    qe^s(1-e^{-x})
+    \geq
+    \tfrac12qe^s.
+\end{aligned}
+\]
+The branch condition therefore gives \(qe^s\ll xq\). On the second
+branch, \(qe^{s-x}\leq q\). It follows from
+\eqref{e-kappa-branches} that
+\[
+    |\kappa(x,Y)|\ll Y e^{-Y}.
+\]
+Within a shell, \(s'=-k\), and differentiation gives
+\[
+    |\partial_x\kappa(x,Y)|\ll Y e^{-Y}
+\]
+on every smooth piece. There are \(O(Y)\) shells. The score
+\[
+    F(e^x,k)=\int_k^{k+1}\frac{du}{e^{xu}-1}
+\]
+is \eqref{e-score-integral} after shifting the integration variable. It
+decreases strictly with \(x\), so each shell has at most one branch
+switch. The smooth pieces have total length \(O(Y)\), and the
+shell-boundary jumps are \(O(Ye^{-Y})\). Consequently, the total
+variation satisfies
+\[
+    \operatorname{TV}_{[\log2,Y/2]}
+    \kappa(\,\cdot\,,Y)
+    \ll
+    Y^2e^{-Y}.
+\]
+At \(x=Y/2\), the score-rounded exponent is one and
+\(\kappa(Y/2,Y)=0\).
+
+The de la Vall\'ee Poussin estimate \cite{delavalleepoussin1899} gives
+\[
+    \pi(e^x)-\operatorname{li}(e^x)
+    =
+    O\left(
+        \frac{e^x}{x}e^{-c\sqrt x}
+    \right).
+\]
+Stieltjes integration by parts, using the variation bound and the
+vanishing upper endpoint, now gives
+\[
+\begin{aligned}
+    &\sum_{p<e^{Y/2}}\kappa(\log p,Y)
+    -
+    \int_{\log2}^{Y/2}\kappa(x,Y)\frac{e^x}{x}\,dx\\
+    &\qquad
+    =
+    O\left(
+        Ye^{-Y/2}e^{-c'\sqrt Y}
+    \right)
+    +O(Ye^{-Y}).
+\end{aligned}
+\]
+This is lower order than the required scale. Shell-boundary conventions
+change the expression by at most \(O(Y^2e^{-Y})\).
+It follows that
+\[
+    \sum_{p<e^{Y/2}}\kappa(\log p,Y)
+    =
+    J(Y)
+    +
+    o\left(\frac1{\sqrt{(e^Y-1)Y}}\right).
+\]
+
+\medskip\noindent\emph{Second-exponent range.}
+The branch formulas give the sharper bound
+\[
+    |\kappa(x,Y)|\ll q(1+x).
+\]
+Therefore
+\[
+    \int_{\log2}^{Y/3}
+    |\kappa(x,Y)|\frac{e^x}{x}\,dx
+    =
+    O(e^{-2Y/3}),
+\]
+which is lower order. Only \(Y/3<x\leq Y/2\), where
+\(\lfloor Y/x\rfloor=2\), contributes at first order.
+
+For all sufficiently large \(Y\), let \(x_\star\) be the solution in
+\((Y/3,Y/2)\) of
+\begin{equation}
+\label{e-rounding-switch}
+    F(e^{x_\star},2)=\frac1{e^Y-1}.
+\end{equation}
+On this shell put
+\[
+    u=Y-2x,
+    \qquad
+    x=\frac{Y-u}{2}.
+\]
+The score in \eqref{e-rounding-switch} increases with \(u\). It is below
+\((e^Y-1)^{-1}\) at \(u=0\) and above it near \(u=Y/3\), so the switch
+exists and is unique. Put \(u_\star=Y-2x_\star\). Uniformly on the shell,
+\[
+\begin{aligned}
+    xF(e^x,2)
+    &=
+    \log(1-e^{-3x})-\log(1-e^{-2x})\\
+    &=
+    e^{-Y+u}
+    \bigl(1+O(e^{-x}+e^{-Y+u})\bigr).
+\end{aligned}
+\]
+The switch equation gives
+\[
+    e^{u_\star}
+    =
+    x_\star\bigl(1+O(e^{-Y/3})\bigr).
+\]
+Together with \(2x_\star+u_\star=Y\), this proves
+\[
+    2x_\star+\log x_\star=Y+o(1).
+\]
+
+On the two sides of the switch, \eqref{e-kappa-branches} gives
+\[
+    \kappa(x,Y)
+    =
+    \begin{cases}
+    q(e^u-1-u)+O(q^2e^{2u}),
+        &0\leq u\leq u_\star,\\[1mm]
+    q(x-u-1+e^{-(x-u)})+O(Yq^2),
+        &u_\star\leq u<Y/3.
+\end{cases}
+\]
+Since \(dx=-du/2\) and \(e^x=e^{Y/2}e^{-u/2}\), the contribution from
+each branch is \(qe^{Y/2}/2\) times its corresponding integral below.
+For the first branch,
+\[
+    \int_0^{u_\star}
+    \frac{e^{-u/2}}x(e^u-1-u)\,du
+    =
+    \frac{2+o(1)}{\sqrt{x_\star}}.
+\]
+Indeed, the terms \(1+u\) contribute \(O(x_\star^{-1})\). In the
+remaining term, set \(t=u_\star-u\), use
+\(x=x_\star+t/2\) and \(e^{u_\star}\sim x_\star\), and apply dominated
+convergence.
+
+For the second branch, set \(t=u-u_\star\). Then
+\[
+    x=x_\star-\frac t2,
+    \qquad
+    x-u=x_\star-u_\star-\frac{3t}{2}.
+\]
+Since
+\[
+    0\leq x-u-1+e^{-(x-u)}\leq x-u\leq x,
+\]
+the second integral equals
+\[
+    e^{-u_\star/2}
+    \int_0^{Y/3-u_\star}
+    e^{-t/2}
+    \frac{x-u-1+e^{-(x-u)}}x\,dt.
+\]
+The ratio is bounded by one and tends to one for every fixed \(t\).
+Since \(e^{-u_\star/2}\sim x_\star^{-1/2}\), dominated convergence gives
+\[
+    \int_{u_\star}^{Y/3}
+    \frac{e^{-u/2}}x
+    \bigl(x-u-1+e^{-(x-u)}\bigr)\,du
+    =
+    \frac{2+o(1)}{\sqrt{x_\star}}.
+\]
+After multiplication by the Jacobian factor \(e^{Y/2}/2\), the error
+\(O(q^2e^{2u})\) on the first branch contributes
+\[
+    O(e^{-3Y/2}x_\star^{1/2}),
+\]
+while the error \(O(Yq^2)\) on the second branch contributes
+\[
+    O(e^{-3Y/2}x_\star^{-1/2}).
+\]
+Both are \(o(e^{-Y/2}x_\star^{-1/2})\), the scale of the main term.
+Combining the two branches yields
+\[
+    J(Y)
+    =
+    e^{-Y/2}
+    \left(
+        \frac2{\sqrt{x_\star}}
+        +o(x_\star^{-1/2})
+    \right).
+\]
+Finally, \(x_\star\sim Y/2\) and
+\[
+    e^{-Y/2}
+    =
+    \frac{\sqrt{1-e^{-Y}}}{\sqrt{e^Y-1}}.
+\]
+Consequently,
+\[
+    J(Y)
+    =
+    \frac1{\sqrt{e^Y-1}}
+    \left(
+        \frac2{\sqrt{x_\star}}
+        +o(x_\star^{-1/2})
+    \right)
+    =
+    \frac{2\sqrt2+o(1)}
+         {\sqrt{(e^Y-1)Y}}.
+\]
+The two sides of the switch contribute equally at first order. Since
+\(e^Y-1=T^\star\), the rounding reduction and prime-sum approximation
+give
+\[
+    \Igap(m)
+    =
+    \frac{2\sqrt2+o(1)}
+         {\sqrt{T^\star Y}}.
+\]
+Since \(Y\sim\log T^\star\) and
+\(T^\star\sim p_m\log p_m\), the denominator is asymptotic to
+\(\sqrt{p_m}\log p_m\).
+\end{proof}
+
+\subsection{Relation to CA shells and the Axler--Nicolas comparison}
+\label{s-score-connection}
+
+The fixed-support optimizer is a constrained CA point, since its
+optional increments are selected by the same score \(F\). It is also a
+size-constrained record on its prescribed support. The classical CA shells
+therefore give a second description of the integer optimizer, although
+they do not provide the relaxed response or the rounding loss used in the
+proof above.
+
+Define the integer shell thresholds by
+\[
+    F(\xi,1)=\eps_m,
+    \qquad
+    F(\xi_k,k)=\eps_m.
+\]
+Nicolas \cite[Proposition~4.7]{nicolas-2022-sigma} proves
+\[
+    \xi^{1/k}\leq\xi_k\leq(k\xi)^{1/k},
+    \qquad
+    \xi_2\sim\sqrt{2\xi}.
+\]
+Since
+\[
+    F(\xi,1)\sim\frac1{\xi\log\xi},
+\]
+Proposition~\ref{prop-integer-threshold-scale} gives
+\(\xi\sim L_m\sim p_m\). The exact threshold rule is
+\[
+    L_m-\theta(p_m)
+    =
+    \sum_{k\geq2}\theta\bigl(\min\{p_m,\xi_k\}\bigr).
+\]
+Nicolas's bounds make every support cap on the right inactive for all
+sufficiently large \(m\). They then give
+\[
+    L_m-\theta(p_m)
+    =
+    \sum_{k\geq2}\theta(\xi_k)
+    =
+    \theta(\xi_2)+O(\xi^{1/3})
+    =
+    \sqrt{2p_m}+o(\sqrt{p_m}).
+\]
+The middle estimate follows from Nicolas's bounds for \(\xi_k\), the
+prime number theorem, and the fact that only \(O(\log\xi)\) shells are
+nonempty.
+
+The relaxed switch is nearby but not identical. It is defined by
+\[
+    F(e^{x_\star},2)=\frac1{T^\star},
+\]
+whereas \(\xi_2\) uses \(\eps_m\). Equation
+\eqref{e-threshold-separation} shows that
+\[
+    e^{x_\star}\sim\xi_2\sim\sqrt{2p_m}.
+\]
+Thus the standard CA second shell locates the score-rounding
+transition, while the prime-sum integral resolves the loss on its two
+sides.
+
+The exact integer factorization, relative to the Mertens term used in
+the next section, has the correction
+\[
+    \sum_{i=1}^m\log(1-p_i^{-(a_i+1)})
+    -\bigl(\log\log L_m-\log\log\theta(p_m)\bigr).
+\]
+For \(\xi_2<p\leq p_m\), the exponent of \(p\) is one. The prime-square
+tail estimate \cite[equations~(2.10)--(2.11)]{nicolas-2022-sigma} gives
+\[
+    \sum_{\xi_2<p\leq p_m}\log(1-p^{-2})
+    =
+    -\frac1{\xi_2\log\xi_2}
+    +o\left(\frac1{\sqrt{p_m}\log p_m}\right)
+    =
+    -\frac{\sqrt2+o(1)}{\sqrt{p_m}\log p_m}.
+\]
+The remaining Euler factors are lower order. Primes with exponent two
+lie above \(\xi_3\), so their contribution is
+\[
+    O\left(\sum_{p>\xi_3}p^{-3}\right)
+    =
+    O(\xi^{-2/3}).
+\]
+If \(a_i\geq3\), the next increment is unselected. Hence
+\(p_i>\xi_{a_i+1}\), and Nicolas's lower bound gives
+\(p_i^{a_i+1}>\xi\). There are \(O(\xi_3)=O(\xi^{1/3})\) such primes, so
+their total contribution is also \(O(\xi^{-2/3})\). Consequently,
+\[
+    \sum_{i=1}^m\log(1-p_i^{-(a_i+1)})
+    =
+    -\frac{\sqrt2+o(1)}{\sqrt{p_m}\log p_m}.
+\]
+Taylor expansion and the shell-size formula similarly give
+\[
+    \log\log L_m-\log\log\theta(p_m)
+    =
+    \frac{\sqrt2+o(1)}{\sqrt{p_m}\log p_m}.
+\]
+The CA decomposition partitions the correction into an Euler-factor tail
+and a log-size change, whereas the rounding integral partitions it at the
+downward and upward rounding switch.
+
+Nicolas's expansion of the Axler--Nicolas size-constrained comparison
+\cite[equations~(5.3)--(5.5)]{nicolas-2025} contains the same formal pair
+\[
+    \frac1{\xi_2\log\xi_2},
+    \qquad
+    \frac{\xi_2}{\xi\log\xi}.
+\]
+The first is the same leading Euler-factor tail. Their second term measures
+additional support-edge primes under a common size constraint. Ours measures
+the Robin penalty applied to second-shell log-size. The common score and
+shell equation explain the same \(2\sqrt2\) coefficient. The different
+feasible sets and the different second terms prevent either theorem from
+being a corollary of the other.
+
+Since the Axler--Nicolas ratio tends to one, its relative gap and its
+logarithm have the same leading term. The normalizations also agree after
+the natural endpoint change. If \(P\)
+is the largest prime in the primorial below \(X\), then
+\(\log X\sim\theta(P)\sim P\). Hence the Axler--Nicolas scale satisfies
+\[
+    \frac1{\sqrt{\log X}\log\log X}
+    \sim
+    \frac1{\sqrt P\log P},
+\]
+which is the fixed-slice scale when \(P=p_m\).
+
+There is a related relaxation interpretation. For every prime \(p\),
+\[
+    \frac{\sigma(p^a)}{p^a}
+    \longrightarrow
+    \frac1{1-p^{-1}}
+    =
+    \frac{p^a}{\varphi(p^a)}
+\]
+as \(a\) tends to infinity. Their ratio can therefore be viewed as
+comparing the infinite-exponent local envelope with finite integer
+exponents while also optimizing the support under a size constraint. The
+present problem compares finite real and integer exponents on a fixed
+support. In both
+cases the first nontrivial marginal decision is the transition from
+exponent one to exponent two. This common decision, rather than a formal
+reduction between the problems, accounts for the matching constant.

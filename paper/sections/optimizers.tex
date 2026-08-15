@@ -1,0 +1,443 @@
+\section{The two optimizers}
+\label{s-optimizers}
+
+The relaxed and integer problems both reduce to one-dimensional
+constructions. A scalar equation gives the relaxed optimizer. A
+fractional-knapsack ordering gives every integer optimizer and a finite
+algorithm for computing it.
+
+\subsection{The relaxed optimizer}
+\label{s-relaxed-scalar}
+
+For \(T>0\), define the log-size of the coordinate response by
+\[
+    s_m(T)
+    =
+    \sum_{i=1}^{m}
+    \max\{\log p_i,\log(1+T)-\log p_i\}.
+\]
+
+\begin{proposition}[Relaxed optimizer]
+\label{prop-scalar-reduction}
+The relaxed problem has a unique maximizer \(\rstar\). There is a unique
+solution \(T^\star>0\) of
+\[
+    T=s_m(T)\log s_m(T),
+\]
+and
+\begin{equation}
+\label{e-relaxed-response}
+    r_i^\star
+    =
+    \max\left\{
+        1,\,
+        \frac{\log(1+T^\star)}{\log p_i}-1
+    \right\}.
+\end{equation}
+In particular,
+\[
+    S^\star:=S(\rstar)=s_m(T^\star),
+    \qquad
+    T^\star=S^\star\log S^\star.
+\]
+\end{proposition}
+
+\begin{proof}
+The local logarithmic terms in \eqref{e-objective} are bounded above,
+whereas \(\log\log S(r)\) tends to infinity whenever a coordinate of
+\(r\) does. A maximum therefore exists. At any maximum, put
+\(T=S(r)\log S(r)\). Since
+\[
+    \frac{d}{du}\log(p_i-p_i^{-u})
+    =
+    \frac{\log p_i}{p_i^{u+1}-1},
+\]
+the one-sided first-order conditions give
+\[
+    p_i^{r_i+1}-1=T
+    \quad\hbox{if \(r_i>1\)},\qquad
+    p_i^2-1\geq T
+    \quad\hbox{if \(r_i=1\)}.
+\]
+These conditions are equivalent to \eqref{e-relaxed-response}, and the
+size of that response is \(s_m(T)\).
+
+It remains to show that the scalar equation has one solution. Set
+\[
+    h(T)=T-s_m(T)\log s_m(T).
+\]
+We have \(h(0)=-\theta(p_m)\log\theta(p_m)<0\), while
+\(s_m(T)\leq\theta(p_m)+m\log(1+T)\), so \(h(T)\) tends to infinity.
+Every root satisfies \(T\geq\theta(p_m)\log\theta(p_m)\).
+
+Away from the switching points, let \(k\) be the number of primes with
+\(p_i^2<1+T\). If \(k=0\), then \(h'(T)=1\). Otherwise,
+\[
+    h'(T)
+    =
+    1-\frac{k(1+\log s_m(T))}{1+T}.
+\]
+The \(k\)th prime is at least \(k+1\), so \(1+T>(k+1)^2\). Also
+\[
+    s_m(T)
+    =
+    \theta(p_m)
+    +
+    \sum_{p_i^2<1+T}
+    \bigl(\log(1+T)-2\log p_i\bigr)
+    <2(1+T).
+\]
+Indeed, on the root interval \(\theta(p_m)<1+T\), while
+\(k<\sqrt{1+T}\) and \(\log(1+T)<\sqrt{1+T}\).
+The elementary inequality
+\[
+    k\bigl(1+\log(2u)\bigr)<u,
+    \qquad u>(k+1)^2,
+\]
+now gives \(h'(T)>0\). At the left endpoint the inequality reduces to
+\[
+    k+1+\frac1k-\log2-2\log(k+1)>0.
+\]
+This is immediate for \(k=1,2\) and increasing for \(k\geq2\).
+Continuity across the switching points proves uniqueness of the root.
+Every global maximizer satisfies the first-order conditions, so the
+response at this root is the unique maximizer.
+\end{proof}
+
+\subsection{The integer optimizer}
+\label{s-integer-prefix}
+
+For \(x>1\) and an integer \(k\geq1\), define the standard CA score
+\cite[Section~4.1]{nicolas-2022-sigma}
+\begin{equation}
+\label{e-ca-score}
+    F(x,k)
+    =
+    \frac1{\log x}
+    \log\left(1+\frac1{x+x^2+\cdots+x^k}\right).
+\end{equation}
+Raising the exponent of \(p\) from \(k-1\) to \(k\) changes the log
+divisor ratio by
+\begin{equation}
+\label{e-score-dictionary}
+    \log\left(
+        \frac{\sigma(p^k)/p^k}
+             {\sigma(p^{k-1})/p^{k-1}}
+    \right)
+    =
+    \log p\,F(p,k).
+\end{equation}
+Equivalently,
+\begin{equation}
+\label{e-score-integral}
+    F(p,k)
+    =
+    \int_{k-1}^{k}\frac{du}{p^{u+1}-1}.
+\end{equation}
+This shows that the score decreases strictly in both arguments and that
+\[
+    F(p,k)\leq\frac1{p^k-1}.
+\]
+In particular, only finitely many eligible scores exceed any positive
+level.
+The fixed-support problem includes the increments \((p,k)\) with
+\(p\leq p_m\) and \(k\geq2\). Their log-size weights are \(\log p\),
+and their scores are ordered as above.
+
+Group equal scores and order the resulting blocks by decreasing score.
+Starting from the primorial \(\prod_{p\leq p_m}p\), let \(N_j\) be the
+integer obtained after the first \(j\) blocks. We refer to these
+integers as score-ordered prefixes. Every such prefix
+is a valid exponent vector because each predecessor in a prime chain has
+a larger score.
+
+\begin{theorem}[Prefix characterization]
+\label{thm-integer-prefix}
+Every integer maximizer is one of the prefix integers \(N_j\). If \(N_m^\star\)
+is any maximizer and
+\[
+    L_m=\log N_m^\star,
+    \qquad
+    \eps_m=\frac1{L_m\log L_m},
+\]
+then an increment \((p,k)\), \(k\geq2\), is selected exactly when
+\begin{equation}
+\label{e-integer-threshold}
+    F(p,k)>\eps_m.
+\end{equation}
+No eligible score equals \(\eps_m\), and no maximizer cuts a tie block.
+Every maximizing prefix also satisfies
+\begin{equation}
+\label{e-prefix-bound}
+    \log N_m^\star\leq\theta(p_m)^{\zeta(2)}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Consider the piecewise-linear curve through the points
+\[
+    \left(
+        \log N_j,\,
+        \log\frac{\sigma(N_j)}{N_j}
+    \right).
+\]
+Its slopes are the ordered scores. This curve is a fractional-knapsack
+upper bound. Let \(\mathcal E\) be any finite selection of increments
+with total extra log-size \(z\). On an interval with score \(c\), let
+\(\mathcal P\) be the set of all increments in earlier blocks. Then
+\[
+\begin{aligned}
+    \sum_{(p,k)\in\mathcal E}\log p\,F(p,k)
+    &=
+    cz+
+    \sum_{(p,k)\in\mathcal E}
+    \log p\bigl(F(p,k)-c\bigr)\\
+    &\leq
+    cz+
+    \sum_{(p,k)\in\mathcal P}
+    \log p\bigl(F(p,k)-c\bigr).
+\end{aligned}
+\]
+The right-hand side is the linear interpolation between the two adjacent
+score-ordered prefix values.
+
+On each interpolation interval the log divisor ratio is affine in
+\(\log n\), while \(-\log\log\log n\) is strictly convex. One of the two
+prefix endpoints therefore has at least as large a value of \(\log G\)
+as any integer selection in the interval. Thus the supremum over integer
+selections equals the supremum over score-ordered prefixes.
+
+The total possible gain above the primorial is
+\[
+    -\sum_{p\leq p_m}\log(1-p^{-2})
+    \leq
+    \log\zeta(2).
+\]
+It follows that the prefix objective tends to minus infinity, so a
+maximizing prefix exists. Comparing any maximizing prefix with the
+primorial gives
+\[
+    \log\log\log N_m^\star
+    \leq
+    \log\log\theta(p_m)+\log\zeta(2),
+\]
+which is \eqref{e-prefix-bound}.
+
+It remains to characterize an arbitrary maximizer \(N_m^\star\). The function
+\(u\mapsto\log\log u\) is strictly concave, and its derivative at \(L_m\)
+is \(\eps_m\). Optimality and the tangent inequality give, for every
+integer \(M\) on the prescribed support,
+\[
+\begin{aligned}
+    \log\frac{\sigma(M)}M-\log\log\log M
+    &\leq
+    \log\frac{\sigma(N_m^\star)}{N_m^\star}-\log\log L_m,\\
+    \log\log\log M
+    &\leq
+    \log\log L_m+\eps_m(\log M-L_m).
+\end{aligned}
+\]
+Consequently,
+\[
+    \log\frac{\sigma(M)}M-\eps_m\log M
+    \leq
+    \log\frac{\sigma(N_m^\star)}{N_m^\star}-\eps_m L_m.
+\]
+This expression is separable over the optional increments. Equation
+\eqref{e-score-dictionary} shows that an increment is selected when its
+score exceeds \(\eps_m\) and is unselected when its score is smaller.
+Equality cannot occur. Adding or removing an increment with score
+\(\eps_m\) would preserve the last display, while strictness in the
+tangent inequality would produce a larger value of \(\log G\). Thus the
+selected increments form a score-ordered prefix and satisfy
+\eqref{e-integer-threshold}. This also proves the tie assertion and
+extends \eqref{e-prefix-bound} to every maximizer.
+\end{proof}
+
+With exact score comparisons, the theorem gives a finite algorithm.
+Maintain one score-ordered chain for each prime, repeatedly take
+the largest available block, and evaluate \(G\) at the resulting prefix.
+The search stops once \(\log N_j\) exceeds the bound in
+\eqref{e-prefix-bound}. This computes the optimizer and its strict
+threshold without searching an exponent box.
+
+The threshold also gives the precise SA and CA interpretation. The
+integer \(N_m^\star\) maximizes
+\[
+    \frac{\sigma(n)}{n^{1+\eps_m}}
+\]
+over integers on the prescribed support. It consequently maximizes
+\(\sigma(n)/n\) on the same support under the size constraint
+\(\log n\leq L_m\). It need not be a global CA or SA number because
+the first-exponent increments \(F(p,1)\) are fixed by the support
+constraint.
+
+\subsection{The common scale}
+\label{s-common-scale}
+
+\begin{proposition}[Relaxed scale]
+\label{prop-relaxed-scale}
+As \(m\) tends to infinity,
+\[
+    S^\star\sim\theta(p_m)\sim p_m,
+    \qquad
+    T^\star\sim p_m\log p_m,
+\]
+and
+\begin{equation}
+\label{e-relaxed-displacement}
+    S^\star-\theta(p_m)
+    =
+    O\left(\sqrt{\frac{p_m}{\log p_m}}\right).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Put \(y=\sqrt{1+T^\star}\). We first show that \(y\leq p_m\) for all
+sufficiently large \(m\). Otherwise every coordinate is interior, so
+\[
+    S^\star
+    =
+    2m\log y-\theta(p_m)
+    \leq2m\log y.
+\]
+Since \(y^2-1=S^\star\log S^\star<2S^\star\log y\), this would imply
+\(y/\log y\ll\sqrt m\). But \(y>p_m\) and the prime number theorem give
+\(y/\log y>p_m/\log p_m\sim m\), a contradiction.
+
+Splitting the response \eqref{e-relaxed-response} at \(p=y\) gives
+\[
+\begin{aligned}
+    S^\star-\theta(p_m)
+    &=
+    2\bigl(\pi(y)\log y-\theta(y)\bigr)\\
+    &=
+    2\int_2^y\frac{\pi(u)}u\,du
+    =
+    O\left(\frac{y}{\log y}\right).
+\end{aligned}
+\]
+Because \(y^2-1=S^\star\log S^\star\), the last bound is \(o(S^\star)\).
+It follows that \(S^\star\sim\theta(p_m)\sim p_m\), and hence
+\(T^\star\sim p_m\log p_m\). Substitution in the same bound proves
+\eqref{e-relaxed-displacement}.
+\end{proof}
+
+\begin{proposition}[Integer scale]
+\label{prop-integer-threshold-scale}
+For every integer maximizer \(N_m^\star\),
+\begin{equation}
+\label{e-integer-mass}
+    \log N_m^\star-\theta(p_m)
+    =
+    \bigl(\sqrt2+o(1)\bigr)
+    \sqrt{\frac{T^\star}{\log T^\star}},
+\end{equation}
+and
+\begin{equation}
+\label{e-threshold-separation}
+    1-T^\star\eps_m
+    =
+    \bigl(\sqrt2+o(1)\bigr)
+    \sqrt{\frac{\log T^\star}{T^\star}}.
+\end{equation}
+In particular, \(T^\star\eps_m<1\) for all sufficiently large \(m\).
+\end{proposition}
+
+\begin{proof}
+Put \(L_m=\log N_m^\star\). Strict separation in
+Theorem~\ref{thm-integer-prefix} gives the exact identity
+\[
+    L_m-\theta(p_m)
+    =
+    \sum_{p\leq p_m}\log p\,
+    \#\{k\geq2\mid F(p,k)>\eps_m\}.
+\]
+The bound \(F(p,k)\leq1/(p^k-1)\) first gives
+\[
+    L_m-\theta(p_m)
+    =
+    O\left(\sqrt{L_m\log L_m}\right).
+\]
+Since \(L_m=\theta(p_m)+O(\sqrt{L_m\log L_m})\), we have
+\(L_m\sim\theta(p_m)\sim p_m\). Hence
+\[
+    L_m\log L_m\sim T^\star.
+\]
+We now estimate the score mass at this level. Put
+\[
+    U=L_m\log L_m.
+\]
+The first optional increment satisfies
+\[
+    F(p,2)
+    =
+    \frac{1+o(1)}{p^2\log p}.
+\]
+For every fixed \(\delta>0\) and every sufficiently large \(p\), this
+gives the uniform bounds
+\[
+    \frac{1-\delta}{p^2\log p}
+    \leq
+    F(p,2)
+    \leq
+    \frac{1+\delta}{p^2\log p}.
+\]
+The positive solution of \(x^2\log x=U\) is
+\[
+    \bigl(\sqrt2+o(1)\bigr)
+    \sqrt{\frac{U}{\log U}}.
+\]
+Comparison with the positive solutions of
+\(x^2\log x=(1\pm\delta)U\), followed by the prime number theorem and
+then \(\delta\to0\), gives
+\[
+    \sum_{\substack{p\leq p_m\\ F(p,2)>1/U}}\log p
+    =
+    \bigl(\sqrt2+o(1)\bigr)
+    \sqrt{\frac{U}{\log U}}.
+\]
+The support cutoff is inactive because
+\[
+    p_m\asymp\frac{T^\star}{\log T^\star}
+    \gg\sqrt{\frac{U}{\log U}}.
+\]
+For \(k\geq3\), the bound \(F(p,k)\leq1/(p^k-1)\) gives total log weight
+\[
+    \sum_{3\leq k\leq\log_2(1+U)}
+    \theta\left((1+U)^{1/k}\right)
+    =
+    O(U^{1/3}+U^{1/4}\log U),
+\]
+which is lower order. Since \(U\sim T^\star\), the exact score identity
+now proves \eqref{e-integer-mass}.
+
+By \eqref{e-relaxed-displacement},
+\[
+    S^\star-\theta(p_m)
+    =
+    o\left(
+        \sqrt{\frac{T^\star}{\log T^\star}}
+    \right).
+\]
+Together with \eqref{e-integer-mass}, this gives
+\[
+    L_m-S^\star
+    =
+    \bigl(\sqrt2+o(1)\bigr)
+    \sqrt{\frac{T^\star}{\log T^\star}}.
+\]
+Taylor expansion of \(u\log u\) now gives
+\[
+\begin{aligned}
+    L_m\log L_m-T^\star
+    &=
+    (1+\log S^\star)(L_m-S^\star)
+    +O\left(\frac{(L_m-S^\star)^2}{S^\star}\right)\\
+    &=
+    \bigl(\sqrt2+o(1)\bigr)
+    \sqrt{T^\star\log T^\star}.
+\end{aligned}
+\]
+Taking reciprocals proves \eqref{e-threshold-separation}.
+\end{proof}
