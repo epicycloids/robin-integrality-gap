@@ -1,5 +1,7 @@
 # The integrality gap in Robin's inequality
 
+**[Paper (PDF)](https://github.com/epicycloids/robin-integrality-gap/releases/latest/download/robin-integrality-gap.pdf)**
+
 Current tagged release: version 0.1.0 (August 2026).
 
 This repository contains the manuscript **"The Integrality Gap in Robin's
