@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: paper-${{ github.repository }}
+  cancel-in-progress: false
+
 env:
   PDF_NAME: robin-integrality-gap.pdf
   TECTONIC_VERSION: "0.15.0"
@@ -43,6 +47,12 @@ jobs:
           chmod 0755 "${RUNNER_TEMP}/tectonic-bin/tectonic"
           printf '%s\n' "${RUNNER_TEMP}/tectonic-bin" >> "${GITHUB_PATH}"
 
+      - name: Cache Tectonic resource bundle
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9  # v6.1.0
+        with:
+          path: ~/.cache/Tectonic
+          key: tectonic-0.15.0-${{ runner.os }}-${{ runner.arch }}-default-bundle-v33
+
       - name: Verify exact supplement
         run: ./verify.sh --no-latex
 
@@ -51,7 +61,15 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p dist
-          tectonic --outdir dist --reruns 9 paper/main.tex
+          for attempt in 1 2 3; do
+            if tectonic --outdir dist --reruns 9 paper/main.tex; then
+              break
+            fi
+            if [ "${attempt}" -eq 3 ]; then
+              exit 1
+            fi
+            sleep "$((attempt * 20))"
+          done
           mv dist/main.pdf "dist/${PDF_NAME}"
           test -s "dist/${PDF_NAME}"
 
