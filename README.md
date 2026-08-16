@@ -2,6 +2,8 @@
 
 **[Paper (PDF)](https://github.com/epicycloids/robin-integrality-gap/releases/latest/download/robin-integrality-gap.pdf)**
 
+[![Paper CI](https://github.com/epicycloids/robin-integrality-gap/actions/workflows/paper.yml/badge.svg)](https://github.com/epicycloids/robin-integrality-gap/actions/workflows/paper.yml)
+
 Current tagged release: version 0.1.0 (August 2026).
 
 This repository contains the manuscript **"The Integrality Gap in Robin's
@@ -45,7 +47,7 @@ environment for the supplement. To replay the certificate alone
 (about two to three minutes, standard hardware):
 
 ```sh
-uv run python verify/verify.py
+uv run --frozen python verify/verify.py
 ```
 
 To check the source manifest, replay the certificate, and build the
@@ -55,13 +57,18 @@ manuscript in one pass:
 ./verify.sh            # pass --no-latex to skip the manuscript build
 ```
 
-## Building the manuscript
+## Building and releases
 
 The manuscript builds with [Tectonic](https://tectonic-typesetting.github.io/):
 
 ```sh
 tectonic --reruns 9 paper/main.tex
 ```
+
+Pushes to `main` and pull requests build a downloadable PDF artifact in the
+[Paper workflow](https://github.com/epicycloids/robin-integrality-gap/actions/workflows/paper.yml).
+Tags matching `v*` also publish `robin-integrality-gap.pdf` as the stable
+release asset used by the **Paper (PDF)** link above.
 
 ## Licensing and citation
 

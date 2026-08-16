@@ -23,7 +23,7 @@ echo "== Source manifest"
 $NICE sha256sum -c SHA256SUMS
 
 echo "== Small-support certificate"
-$NICE uv run python verify/verify.py
+$NICE uv run --frozen python verify/verify.py
 
 if [ "$BUILD_LATEX" = yes ]; then
   echo "== Manuscript build (Tectonic)"

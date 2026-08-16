@@ -1,0 +1,94 @@
+name: Paper
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PDF_NAME: robin-integrality-gap.pdf
+  TECTONIC_VERSION: "0.15.0"
+  TECTONIC_SHA256: 875fbbc9ab48560d7776088c608e0beee49197b57ab4a2f6c5385b2c661c842f
+
+jobs:
+  build:
+    name: Verify and build paper
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d  # v10.0.1
+        with:
+          version: "0.11.32"
+
+      - name: Install Tectonic
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="${RUNNER_TEMP}/tectonic-${TECTONIC_VERSION}.tar.gz"
+          curl --fail --location --retry 3 --output "${archive}" \
+            "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          printf '%s  %s\n' "${TECTONIC_SHA256}" "${archive}" | sha256sum --check -
+          mkdir -p "${RUNNER_TEMP}/tectonic-bin"
+          tar --extract --gzip --file "${archive}" --directory "${RUNNER_TEMP}/tectonic-bin" tectonic
+          chmod 0755 "${RUNNER_TEMP}/tectonic-bin/tectonic"
+          printf '%s\n' "${RUNNER_TEMP}/tectonic-bin" >> "${GITHUB_PATH}"
+
+      - name: Verify exact supplement
+        run: ./verify.sh --no-latex
+
+      - name: Build paper
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          tectonic --outdir dist --reruns 9 paper/main.tex
+          mv dist/main.pdf "dist/${PDF_NAME}"
+          test -s "dist/${PDF_NAME}"
+
+      - name: Upload paper artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a  # v7.0.1
+        with:
+          name: robin-integrality-gap-pdf
+          path: dist/robin-integrality-gap.pdf
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Publish tagged PDF
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - name: Download paper artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  # v8.0.1
+        with:
+          name: robin-integrality-gap-pdf
+          path: dist
+
+      - name: Publish release asset
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          asset="dist/${PDF_NAME}"
+          test -s "${asset}"
+          if gh release view "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release upload "${RELEASE_TAG}" "${asset}" --clobber --repo "${GITHUB_REPOSITORY}"
+          else
+            gh release create "${RELEASE_TAG}" "${asset}" --verify-tag --generate-notes \
+              --title "${RELEASE_TAG}" --repo "${GITHUB_REPOSITORY}"
+          fi
